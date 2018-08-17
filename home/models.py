@@ -1,4 +1,7 @@
 from django.db import models
+# import pymysql
+# import MySQLdb
+from django.db import connection
 
 # Create your models here.
 
@@ -7,6 +10,40 @@ class Categories(models.Model):
     categoryname = models.CharField(db_column='CategoryName', unique=True, max_length=15)  # Field name made lowercase.
     description = models.TextField(db_column='Description', blank=True, null=True)  # Field name made lowercase.
     picture = models.TextField(db_column='Picture', blank=True, null=True)  # Field name made lowercase.
+    ############## 新增 ##############
+    def create(self,usercomment):
+        with connection.cursor() as cursor:
+            sql = """insert into categories(categoryid,categoryname,description,picture) values(%s,%s,%s,%s)"""
+            cursor.execute(sql,usercomment)
+    ############## 刪除 ##############
+    ### 依照一種敘述(where)刪除資料 
+    # def delete(self,usercomment):
+    #     with connection.cursor() as cursor:
+    #         sql = "delete from categories where categoryid = %s"
+    #         cursor.execute(sql,usercomment)
+    ### 依照多種敘述(where)刪除資料 
+    def delete(self,usercomment):
+        with connection.cursor() as cursor:
+            sql = "delete from categories where (categoryid = %s and categoryname = %s)"
+            # cursor.execute(sql,(usercomment,))
+            cursor.execute(sql,usercomment)
+    ############## 修改 ##############
+    def update(self,usercomment):
+        with connection.cursor() as cursor:
+            sql = """update categories set categoryname = %s, description = %s, picture = %s  where categoryid = %s"""
+            cursor.execute(sql,usercomment)
+    ############## 查詢 ##############
+    def read(self,usercomment):
+        with connection.cursor() as cursor:
+            # sql = """update categories set categoryname = %s, description = %s, picture = %s  where categoryid = %s"""
+            # cursor.execute(sql,usercomment)
+            cursor.execute("select * from categories where description = %s",usercomment)
+            rows = cursor.fetchall()
+            print(rows)
+
+# ((45, 'uuuu', 'dddd', b'dddd'), (50, 'ffvvxx', 'dddd', b'dddd'), (68, 'pppklkj', 'dddd', b'dddd'))
+
+
 
     class Meta:
         managed = False
