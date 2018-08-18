@@ -11,17 +11,34 @@
     <form method="POST">
         {% csrf_token %}
         <!-- <input type="text" name="categoryid" placeholder="categoryid"> -->
-        <!-- <input type="text" name="categoryname" placeholder="categoryname"> -->
-        <input type="text" name="description" placeholder="description">
         <!-- <input type="text" name="picture" placeholder="picture"> -->
+
+        <!-- <input type="text" name="categoryname" placeholder="categoryname"> -->
+        <select name="categoryname">
+            <option>請選擇</option>
+            {% for i in aaa %}
+            <option>{{i.1}}</option>
+            {% endfor %} 
+        </select>
+        <!-- <input type="text" name="description" placeholder="description"> -->
+        <select name="description">
+            <option>請選擇</option>
+            {% for i in aaa %}
+            <option>{{i.2}}</option>
+            {% endfor %} 
+        </select>
+
         <button type="submit">查詢</button>
     </form>
+
+    <h3>方法一: 將查詢寫死,不用where查詢</h3>
+    <h3>方法二: 依照使用者需求,where去查詢</h3>
     {% for i in rows %}
     <li>
-        {{i.categoryid}}
-        {{i.categoryname}}
-        {{i.description}}
-        {{i.picture}}
+        {{i.0}}
+        {{i.1}}
+        {{i.2}}
+        {{i.3}}
     </li>
     {% endfor %}       
 </body>

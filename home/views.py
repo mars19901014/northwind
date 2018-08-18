@@ -49,16 +49,21 @@ def update(request):
         comment.update(usercomment)   
     return render(request,'home/update.html',locals())
 
+### 依照使用者需求,where去查詢
 def read(request):
+    aaa = Categories.read1()
     if request.method == "POST":
+        categoryname = request.POST['categoryname']
         description = request.POST['description']
         comment = Categories()
-        usercomment = tuple([description])
-        comment.read(usercomment) 
+        usercomment = tuple([categoryname,description])
+        # usercomment = tuple([description])
+        rows = comment.read(usercomment) 
     return render(request,'home/read.html',locals())
-    # return render(request,'home/uuu.html',locals())
+
+## 將查詢寫死,不用where查詢
+# def read(request):
+#     rows = Categories.read()
+#     return render(request,'home/read.html',locals())
 
 
-
-
-# data = Customercustomerdemo.objects.all().values()

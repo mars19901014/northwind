@@ -33,15 +33,37 @@ class Categories(models.Model):
             sql = """update categories set categoryname = %s, description = %s, picture = %s  where categoryid = %s"""
             cursor.execute(sql,usercomment)
     ############## 查詢 ##############
+    ###### 將查詢寫死,不用where查詢 ######
+    # def read():
+    #     with connection.cursor() as cursor:
+    #         cursor.execute("select * from categories")
+    #         rows = cursor.fetchall()
+    #     return rows
+    ###### 依照使用者需求,where去查詢 ######
     def read(self,usercomment):
         with connection.cursor() as cursor:
-            # sql = """update categories set categoryname = %s, description = %s, picture = %s  where categoryid = %s"""
-            # cursor.execute(sql,usercomment)
-            cursor.execute("select * from categories where description = %s",usercomment)
-            rows = cursor.fetchall()
-            print(rows)
 
-# ((45, 'uuuu', 'dddd', b'dddd'), (50, 'ffvvxx', 'dddd', b'dddd'), (68, 'pppklkj', 'dddd', b'dddd'))
+            # usercomment[0]=categoryname
+            if usercomment[0] == "請選擇":
+                sql = "select * from categories where description = %s"
+                cursor.execute(sql,(usercomment[1],))
+            # usercomment[1]=description
+            elif usercomment[1] == "請選擇":
+                sql = "select * from categories where categoryname = %s"
+                cursor.execute(sql,(usercomment[0],)) # usercomment[0]=uuuu, 所以要加上(,)
+            else:
+                sql = "select * from categories where (categoryname = %s and description = %s)"
+                cursor.execute(sql,usercomment)       # usercomment=('uuuu', 'dddd') 
+
+            # sql = "select * from categories where description = %s"
+            rows = cursor.fetchall()
+        return rows
+    ### 下拉選單的值
+    def read1():
+        with connection.cursor() as cursor:
+            cursor.execute("select * from categories")
+            rows = cursor.fetchall()
+        return rows
 
 
 
