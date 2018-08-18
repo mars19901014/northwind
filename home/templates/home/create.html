@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>新增</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="categoryid" placeholder="categoryid">
+        <input type="text" name="categoryname" placeholder="categoryname">
+        <input type="text" name="description" placeholder="description">
+        <input type="text" name="picture" placeholder="picture">
+        <button type="submit">新增</button>
+    </form>    
+</body>
+</html>

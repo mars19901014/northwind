@@ -1,0 +1,30 @@
+select * from upload_upload;
+
+
+SELECT  id,pic  FROM upload_upload; 
+
+
+
+select * from upload_upload WHERE  id = 53; 
+ 
+
+
+SELECT  id,pic  FROM upload_upload WHERE  description = '預測結果為: NODULE <結節> (37.8%)';
+  
+
+
+SELECT  id,pic  FROM upload_upload WHERE  upload_date like '2018-07-30 10:51:23';
+
+
+
+INSERT INTO upload_upload(id,pic) VALUES ( '65' , 'stanley888' );
+
+
+
+update upload_upload set pic = 'aaaaaaa'  WHERE id = '60'  ;
+
+
+
+
+delete from upload_upload where id = 64;
+
